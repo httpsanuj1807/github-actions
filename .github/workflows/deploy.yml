@@ -24,7 +24,7 @@ jobs:
 
       - name: Deploy Frontend To Nginx
         run: |
-          sudo rsync -av --delete frontend/dist/ /var/www/html/
+          sudo rsync -a --delete frontend/dist/ /var/www/html/
           sudo rm -r frontend
 
       - name: Restart Nginx
@@ -44,12 +44,15 @@ jobs:
       - name: Deploy Backend
         run: |
           sudo mkdir -p /home/ubuntu/github-actions/temp-backend/
-          sudo rsync -av --delete --exclude=".*" . /home/ubuntu/github-actions/temp-backend/
+          sudo rsync -a --delete --exclude=".*" . /home/ubuntu/github-actions/temp-backend/
           pm2 stop backend
           sudo mkdir -p /home/ubuntu/github-actions/backend/
-          sudo rsync -av --delete /home/ubuntu/github-actions/temp-backend/ /home/ubuntu/github-actions/backend/
+          sudo rsync -a --delete /home/ubuntu/github-actions/temp-backend/ /home/ubuntu/github-actions/backend/
 
       - name: Restart Backend Services
-        run: sudo pm2 restart backend
+        run: |
+          sudo -u ubuntu pm2 restart backend || sudo -u ubuntu pm2 start /home/ubuntu/github-actions/backend/index.js --name backend
+          sudo -u ubuntu pm2 save
+
 
   
