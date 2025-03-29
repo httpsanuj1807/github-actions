@@ -24,7 +24,7 @@ function App(){
     <div>
       <h1>Hello, CI/CD Pipeline!</h1>
       <p>This is a test deployment using GitHub Actions & AWS EC2.</p>
-      <p>Current version is V4. Date 29 March, 2024. Time 22:03 PM</p>
+      <p>Current version is V5. Date 29 March, 2024. Time 23:58 PM</p>
       {!name && <button onClick={getName}>Who am I ?</button>}
       {!error && name && <p>My name is {name}</p>}
       {!name && error && <p>{error}</p>}
