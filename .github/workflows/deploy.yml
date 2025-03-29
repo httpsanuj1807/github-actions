@@ -1,0 +1,55 @@
+name: CI/CD Pipleline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  frontend:
+    name: Build And Deploy Frontend
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Frontend Dependencies
+        working-directory: frontend 
+        run: npm install
+      
+      - name: Build Frontend
+        working-directory: frontend
+        run: npm run build
+
+      - name: Deploy Frontend To Nginx
+        run: |
+          sudo mv frontend/dist/* /var/www/html
+          sudo rm -r frontend
+
+      - name: Restart Nginx
+        run: sudo systemctl restart nginx
+  
+  backend:
+    name: Deploy Backend
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Backend Dependencies
+        run: npm install
+
+      - name: Deploy Backend
+        run: |
+          sudo mv ./* /home/ubuntu/github-actions/temp-backend/
+          pm2 stop backend
+          sudo rm -rf /home/ubuntu/github-actions/backend/*
+          sudo mv /home/ubuntu/github-actions/temp-backend/* /home/ubuntu/github-actions/backend/
+          sudo rm -r /home/ubuntu/github-actions/temp-backend
+
+      - name: Restart Backend Services
+        run: sudo pm2 restart backend
+
+  
