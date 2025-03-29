@@ -1,0 +1,23 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #0f0f0f;
+    color: white;
+    font-size: small;
+    box-sizing: border-box;
+}
+
+div{
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+button{
+    margin: 2px;
+    padding: 4px;
+    cursor: pointer;
+    background-color: rgb(231, 217, 199);
+    border-radius: 2px;
+    border: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
