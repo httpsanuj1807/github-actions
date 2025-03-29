@@ -33,6 +33,7 @@ jobs:
   backend:
     name: Deploy Backend
     runs-on: self-hosted
+    needs: frontend
 
     steps:
       - name: Checkout Repository
@@ -44,7 +45,7 @@ jobs:
       - name: Deploy Backend
         run: |
           sudo mkdir -p /home/ubuntu/github-actions/temp-backend/
-          sudo rsync -a --delete --exclude=".*" . /home/ubuntu/github-actions/temp-backend/
+          sudo rsync -a --delete --exclude=".*" --exclude="frontend" . /home/ubuntu/github-actions/temp-backend/
           pm2 stop backend
           sudo mkdir -p /home/ubuntu/github-actions/backend/
           sudo rsync -a --delete /home/ubuntu/github-actions/temp-backend/ /home/ubuntu/github-actions/backend/
