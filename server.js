@@ -7,9 +7,10 @@ app.get('/test', (req, res) => {
 })
 
 app.get('/api/getName', (req, res) => {
+    // change in backend code
     res.status(200).json({
-        name: "Anuj Kumar"
-    });
+        name: "Umm...Virat Kohli"
+    }); 
 } )
 
 app.listen(8000, () => {
